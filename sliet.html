@@ -1,0 +1,1155 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <script type="text/javascript">
+            var currentControllerName = 'Registration';
+            var webAppPath = '';
+        </script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Registration | Sant Longowal Institute of Engineering and Technology, Longowal - 148106 </title>
+
+
+    <link rel='shortcut icon' href="favicon.ico" />
+    <link href="/Fonts/css/font-awesome.min.css?" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link href="/Content/bootstrap.min.css?" rel="stylesheet" />
+    <link href="/Content/style.css?" rel="stylesheet" />
+    <link href="/Content/login.css?" rel="stylesheet">
+    <link href="/Content/extra.min.css?" rel="stylesheet">
+    <link href="/Content/style.css?" rel="stylesheet">
+    <link rel="stylesheet" href="/Content/jquery-confirm.min.css??">
+    <link href="/Content/bootstrap-datetimepicker.min.css??" rel="stylesheet" />
+    <link href="/Content/bootstrap-select.css??" rel="stylesheet" type="text/css" />
+
+    <script src="/Scripts/jquery-3.3.1.min.js??"></script>
+    <script src="/Scripts/popper.min.js??"></script>
+    <script src="/Scripts/bootstrap.bundle.min.js??"></script>
+    <script src="/Scripts/moment.min.js??"></script>
+    <script src="/Scripts/bootstrap-datetimepicker.min.js??"></script>
+    <script src="/Scripts/jquery-confirm.min.js??"></script>
+    <script src="/Scripts/bootbox.min.js??"></script>
+    <script src="/Scripts/bootstrap-select.min.js??" type="text/javascript"></script>
+
+    <script>
+        $('.carousel').carousel({
+            interval: 3000
+        })
+
+        $(document).ready(function () {
+            $("#status").hide();
+            $("#dvWrapper").css("padding-top", "0px");
+        });
+
+        function isNumberKeywithPoint(e) {
+            var charCode = (e.which) ? e.which : event.keyCode
+            if ((charCode > 46) && (charCode > 31) && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+        }
+
+
+        function isNumberKey(e) {
+            var charCode = (e.which) ? e.which : event.keyCode
+            if ((charCode > 31) && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+        }
+
+        function isNumberKeyOnly(e) {
+            var charCode = (e.which) ? e.which : event.keyCode
+            if ((charCode > 31) && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+        }
+
+        function isNumberKeywithPoint(e) {
+            var charCode = (e.which) ? e.which : event.keyCode
+            if ((charCode > 46) && (charCode > 31) && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+        }
+
+        function isCharKeyOnly(evt) { //validate to input only Characters and spaces
+
+            var code = (evt.which) ? evt.which : event.keyCode
+            if (!((code > 64 && code < 91) || (code > 96 && code < 123) || code == 32 || code == 8))
+                return false;
+
+            return true;
+        }
+
+        function isAlphaNumeric(e) { //validate to input only alpha or numeric characters
+            var k;
+            document.all ? k = e.keyCode : k = e.which;
+            return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57));
+        }
+
+        //To Upperise input stream
+        function toUpperTxt(id) {
+            id.value = id.value.toUpperCase();
+
+        }
+
+        function chkISNAN(txtName) {
+            var txtValue = document.getElementById(txtName).value;
+            if (isNaN(txtValue)) {
+                jAlert("Entered value Must be Numeric.", "Message");
+                document.getElementById(txtName).value = "";
+                document.getElementById(txtName).focus();
+                return false;
+            }
+            if (txtValue != "") {
+                var count = 0;
+                for (var i = 0; i < txtValue.length; i++) {
+                    var last = i + 1;
+                    var str = "";
+                    if (i < txtValue.length) {
+                        str = txtValue.substring(i, last);
+                    }
+                    else {
+                        str = txtValue.substring(i, txtValue.length - 1);
+                    }
+                    if (str == "0") {
+                        count++;
+                    }
+                }
+                if (count == txtValue.length) {
+                    jAlert("You can not Write 0 here", "Message");
+                    document.getElementById(txtName).value = "";
+                    document.getElementById(txtName).focus();
+                    return false;
+                }
+            }
+            return true;
+
+        }
+
+        $(document).ready(function () {
+            $("#loading").hide();
+            //$('.datatable').DataTable({
+            //    responsive: true
+            //});
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                $($.fn.dataTable.tables(true)).DataTable({
+                    responsive: true
+                })
+                    .columns.adjust()
+                    .responsive.recalc();
+            });
+            $('body').tooltip({
+                selector: "[data-tooltip=tooltip]",
+                container: "body"
+            });
+
+            $('.selectpicker').selectpicker();
+            //
+
+            $('.calendar').datetimepicker({
+                format: "DD/MM/YYYY"
+            });
+
+            $('.calendarFormated').datetimepicker({
+                format: "DD/MM/YYYY",
+                maxDate: "12/31/2010"
+            });
+
+            $('.timepicker').datetimepicker({
+                format: "LT"
+            });
+            $('.datetimepicker').datetimepicker();
+
+
+            //$(".calendar").datepicker({ format: 'dd/mm/yyyy' })
+            //    .on('changeDate', function (e) {
+            //        $(this).datepicker('hide');
+            //    });
+            $(document).ajaxStart(function () {
+                $("#loading").show();
+            }).ajaxStop(function () {
+                $("#loading").hide();
+            });
+
+        });
+        function LayoutChange() {
+            if ($("#ddlLayout").val() != "") {
+                location.href = webAppPath + $("#ddlLayout").val();
+            }
+
+        }
+
+        function topPage() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        function deepakAlert(message) {
+            bootbox.alert({
+                title: "Validation Message",
+                message: message,
+                closeButton: false
+            });
+        }
+
+        function deepakGuideLine(message) {
+            bootbox.alert({
+                title: "Guideline",
+                message: message,
+                closeButton: false
+            });
+        }
+
+        function deepakUpload(message) {
+            bootbox.alert({
+                title: "Upload Certificate",
+                message: message,
+                closeButton: false
+            });
+        }
+
+    </script>
+
+
+</head>
+
+<body>
+    <div id="loading" class="loader hideOnPrint">
+        <div class="loader-container">
+            <img src="/Images/load.gif" width="100" />
+        </div>
+    </div>
+    <div class="page-wrap">
+        <header class="noNav hideOnPrint">
+            <div class="navbar-menu">
+                <div class="container">
+                    <div class="top_tick">
+                        <nav class="navbar navbar-expand-md navbar-light p-0">
+                            <!-- Toggler/collapsibe Button -->
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <!-- Navbar links -->
+                            <div class="collapse navbar-collapse hideOnPrint" id="collapsibleNavbar">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/Login">Registration</a></li>
+
+
+                                </ul>
+                            </div>
+                        </nav>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="container hideOnPrint">
+                <div class="row">
+                    <div class="col-md-5 d-flex align-items-center">
+                        <img id="imgCollegeLogo" src="/Images/logo.jpg" class="logo mr-3" style="">
+                        <h5 class="mb-0 logo-name"> Sant Longowal Institute of Engineering and Technology, Longowal - 148106 </h5>
+                    </div>
+                    <div class="col-md-7">
+                        
+                        <div class="d-flex glyp-text justify-content-end">
+                            <span class="fa fa-phone mr-3"></span><div> 9650970295, 9910496853, 01672-280072, 253136</div>
+                        </div>
+                        <div class="d-flex glyp-text justify-content-end">
+                            <span class="fa fa-envelope-o mr-3"></span><div>chairmanset2024@gmail.com</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </header>
+        <div class="jumbotron">
+
+
+            
+
+<script type="text/javascript" src="/Scripts/developerjs/registration.js?10032024110631"></script>
+
+
+
+
+<div class="container">
+    <div class="" id="divRegForm">
+        <h3 class="bgDBlue fontWhite p-2 marT10 f15 mb-0">Apply Form <span class="floatR">* Indicate that these fields are mandatory.</span></h3>
+
+        <div class="bor1pxSolidblue p-3 mb-2 ">
+
+            <div class="form-horizontal row">
+                <div class="col-lg-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label b">Applying for</label>
+                        <div class="col-sm-8">
+
+                                <input type="hidden" id="hfPostId" value="1001" />
+                                <label class="form-control-label" id="lblAppliedExam">SLIET ADMISSIONS 2024-25</label>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label b mand">Applying For</label>
+                        <div class="col-sm-8">
+                            <select id="ddlSoughtFor" class="form-control">
+                                <option value="0">[Choose One]</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-horizontal row">
+                <div class="col-lg-6" id="divBE" style="display:none;">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label b mand">Applying Through:</label>
+                        <div class="col-sm-8">
+                            <select id="ddlApplyingThrough" class="form-control">
+                                <option value="0">[Choose One]</option>
+
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" id="divRegistrationNo" style="display:none;">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label b mand">Registration No:<br /><small class="d-block">(SLIET Numeric Digit only)</small></label>
+
+                        <div class="col-sm-8">
+                            <input type="text" id="tbOldRegistrationNo" class="form-control upperCase" maxlength="20" placeholder="Registration No." />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-horizontal row" id="divChoiseofCourse" style="display:none;">
+
+                <div class="col-lg-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label b mand">Choice of Course:</label>
+                        <div class="col-sm-8">
+                            <select id="ddlChoiceofCourse" class="form-control">
+                                <option value="0">[Choose One]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label b mand">Stream:</label>
+                        <div class="col-sm-8">
+                            <select id="ddlStream" class="form-control">
+                                <option value="0">[Choose One]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="form-horizontal row" id="divChoiseofCentre" style="display:none;">
+
+                <div class="col-lg-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label b mand"> Centre Choice 1:</label>
+                        <div class="col-sm-8">
+                            <select id="ddlFirstChoice" class="form-control">
+                                <option value="0">[Choose One]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label b mand"> Centre Choice 2:</label>
+                        <div class="col-sm-8">
+                            <select id="ddlSecondChoice" class="form-control">
+                                <option value="0">[Choose One]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label b mand"> Centre Choice 3:</label>
+                        <div class="col-sm-8">
+                            <select id="ddlThirdChoice" class="form-control">
+                                <option value="0">[Choose One]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="divAdditionalQualification" class="bgDBlue fontWhite p-2 marT10 f15 mb-0">
+            <div class="d-flex flex-wrap align-items-center">
+                <span id="hAdditionalQualification">
+                </span> <span style="color:red; margin-left:5px;">*</span>
+                <span style="margin-left:auto;">
+                    <select id="ddlChooseQalification" class="form-control">
+                        <option value="100">[Choose One]</option>
+
+                        <option value="1" selected="selected">Yes</option>
+                        <option value="2" >No</option>
+                    </select>
+                </span>
+            </div>
+        </div>
+
+        <div class="bor1pxSolidblue p-3 mb-2 " style="display:none;" id="divQualificationDetail">
+            <div class="form-horizontal row">
+
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Exam Name :
+                        </label>
+                        <div class="col-sm-8">
+                            <select id="ddlAdditionalQalification" class="form-control">
+                                <option value="0">[Choose One]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Obtained Marks :
+
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbObtainedMarks" class="form-control upperCase" maxlength="4" placeholder="Obtained Marks" onblur="return validateMarks();" onkeypress="return isNumberKeyOnly(event);" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Total Marks :
+
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbTotalMarks" class="form-control upperCase" maxlength="4" placeholder="Total Marks" onblur="return validateMarks();" onkeypress="return isNumberKeyOnly(event);" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Passing Year : 
+
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbPassingYear" class="form-control upperCase" maxlength="4" placeholder="Passing Year" onblur="return validPYear();" onkeypress="return isNumberKeyOnly(event);" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <h3 class="bgDBlue fontWhite p-2 marT10 f15 mb-0">Personal Details</h3>
+        <div class="bor1pxSolidblue p-3 mb-2 ">
+            <div class="form-horizontal row">
+
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            First Name
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbFirstName" class="form-control upperCase" maxlength="100" placeholder="First Name" onkeypress="return isCharKeyOnly(event);" onblur="checkLengthForName(this)" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label  ">
+                            Last Name
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbLastName" class="form-control upperCase" maxlength="100" placeholder="Last Name" onkeypress="return isCharKeyOnly(event);" onblur="checkLengthForName(this)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Father's Name
+
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbFatherName" maxlength="100" class="form-control upperCase" placeholder="Father's Name" onkeypress="return isCharKeyOnly(event);" onblur="checkLengthForName(this)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Mother's Name
+
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbMotherName" maxlength="100" class="form-control upperCase" placeholder="Mother's Name" onkeypress="return isCharKeyOnly(event);" onblur="checkLengthForName(this)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0">
+                            Academic Bank of Credits ID
+
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbBankofCredit" maxlength="12" class="form-control upperCase" placeholder="Bank of Credit" onkeypress="return isNumberKeyOnly(event);" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Category:
+
+                        </label>
+                        <div class="col-sm-8">
+                            <select id="ddlCategory" class="form-control">
+                                <option value="0">[Choose One]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Annual Income Slab:
+
+                        </label>
+                        <div class="col-sm-8">
+                            <select id="ddlAnnualIncomeSlab" class="form-control">
+                                <option value="0">[Choose One]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Date of Birth:
+                            <small class="d-block">DD/MM/YYYY</small>
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbDateOfBirth" maxlength="10" class="form-control calendarFormated" placeholder="Date of Birth" value="" onblur="ValidateDateofBirth(this.value);" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Annual Income
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbAnnualIncome" class="form-control " maxlength="7" placeholder="Annual Income"  onkeypress="return isNumberKeyOnly(event);" />
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Is Domicile of Punjab?:
+
+                        </label>
+                        <div class="col-sm-8">
+                            <select id="ddlDomicile" class="form-control">
+                                <option value="100">[Choose One]</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Gender:
+
+                        </label>
+                        <div class="col-sm-8">
+                            <select id="ddlGender" class="form-control">
+                                <option value="0">[Choose One]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Nationality:
+
+                        </label>
+                        <div class="col-sm-8">
+                            <select id="ddlNationality" class="form-control">
+                                <option value="0">[Choose One]</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Religion:
+                        </label>
+                        <div class="col-sm-8">
+
+                            <select id="ddlReligion" class="form-control ">
+                                <option value="0">[Choose One]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Is Physical Handicap (PH)?:
+
+                        </label>
+                        <div class="col-sm-8">
+                            <select id="ddlPH" class="form-control">
+                                <option value="100">[Choose One]</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Blood Group
+
+                        </label>
+                        <div class="col-sm-8">
+                            <select id="ddlBloodGroup" class="form-control">
+                                <option value="0">[Choose One]</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h3 class="bgDBlue fontWhite p-2 marT10 f15 mb-0">Mailing Address Details</h3>
+        <div class="bor1pxSolidblue p-3 mb-2 ">
+            <div class="form-horizontal row">
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Address:
+
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbAddressLine1" maxlength="100" class="form-control upperCase" placeholder="Address" onkeypress="return isAlphaNumeric(event);" onblur="checkLengthAddress(this)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 upperCase">
+                            Landmark:
+
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbAddressLine2" maxlength="100" class="form-control upperCase" placeholder="Landmark" onkeypress="return isAlphaNumeric(event);" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            State:
+
+                        </label>
+                        <div class="col-sm-8">
+                            <select id="ddlState" class="form-control">
+                                <option value="0">[Choose One]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            District:
+
+                        </label>
+                        <div class="col-sm-8">
+                            <select id="ddlCity" class="form-control">
+                                <option value="0">[Choose One]</option>
+                              
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Pincode:
+
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbPincode" maxlength="6" class="form-control" placeholder="Pincode" onkeypress="return isNumberKeyOnly(event);" onblur="return validatePincode(this);" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row ">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                           Address Type
+
+                        </label>
+                        <div class="col-sm-8">
+                            <select id="ddlAddressType" class="form-control">
+                                <option value="0">[Choose One]</option>
+                                <option value="Rural">Rural</option>
+                                <option value="Urban">Urban</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <h3 class="bgDBlue fontWhite p-2 marT10 f15 mb-0">Contact Details</h3>
+        <div class="bor1pxSolidblue p-3 mb-2 ">
+            <div class="form-horizontal row">
+                <div class="col-lg-12 mb-4">
+                    <span class="blue">(Your Email ID and Mobile Number will be used for Communication and Notification through SMS and E-mail)</span>
+
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Email ID
+
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbEmail" maxlength="150" placeholder=" Email ID" onblur="return validateEmailQuery(this);" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row with-icon">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Mobile No.
+                        </label>
+                        <div class="col-sm-8">
+                            <span class="control-label">+91</span>
+                            <input type="text" id="tbMobileNo" maxlength="10" class="form-control" placeholder="Mobile No" onblur="return validateMobile(this);" onkeypress="return isNumberKeyOnly(event);" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row with-icon">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Parent's Contact No:
+
+                        </label>
+                        <div class="col-sm-8">
+                            <span class="control-label">+91</span>
+                            <input type="text" id="tbParentMobileNo" maxlength="10" class="form-control" placeholder="Parent's Mobile No" onblur="return validateMobile(this);" onkeypress="return isNumberKeyOnly(event);" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label pt-0 mand">
+                            Adhaar Card No.
+
+                        </label>
+                        <div class="col-sm-8">
+
+                            <input type="text" id="tbAdhaarNo" maxlength="12" class="form-control upperCase" placeholder="Adhaar Card No" onkeypress="return isNumberKeyOnly(event);"  onblur="return validateAadhaarNo(this);"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label pt-0 mand">Enter Captcha</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="tbCaptchaCheck" maxlength="10" name="CaptchaCode" onpaste="return false" ondrag="return false;" ondrop="return false" autocomplete="off" class="form-control" onkeypress="return isNumberKeyOnly(event);" required="" />
+                            <br />
+                            <input type="text" id="tbCaptcha" name="Captcha" class="capcha " oncopy="return false" onpaste="return false;" />&nbsp;&nbsp;<input type="button" id="btnCapcha" value="" class="capchaRefresh" onclick="RefreshCaptcha('#tbCaptcha');" />
+                            <input type="hidden" name="hdnCaptchaNo" id="hdnCaptchaNo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fontDarkRed bgGrey p-2 marT15 f15">
+            <span class="fontDarkRed b f13">Declaration :</span> <b style="text-align:right">Kindly read the declaration carefully and give consent on it</b>
+        </div>
+
+        <div class="bor1pxSolidblue p-3 mb-2 ">
+            <div class="form-horizontal row">
+                <div class="f11">
+                    <label class="checkbox-inline" style="margin-top: 10px;">
+                        <input type="checkbox" id="chkDecl" />
+                        <span style="font-size: 13px; line-height: 18px;">
+                            I, hereby declare that all statements made in the application are true, complete and correct to the best of my knowledge and belief. I understand that in the event of any information being found suppressed/false or incorrect or ineligibility being detected before or after the examination, my candidature is liable to be cancelled.
+
+                        </span>
+                        <small style="padding-left: 20px; margin-top: 16px; line-height: 20px;">मैं, इसके द्वारा यह घोषणा करता हूं कि आवेदन में की गई सभी प्रतिमाएँ मेरे ज्ञान और विश्वास के अनुसार सही, पूर्ण और सही हैं। मैं समझता हूं कि परीक्षा से पहले या बाद में किसी भी जानकारी को दबाए जाने / गलत या गलत या अयोग्य पाए जाने की स्थिति में, मेरी उम्मीदवारी को रद्द करने के लिए उत्तरदायी है।</small>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="btnR" style="text-align: center; margin-top: 5px;">
+            <input type="button" id="btnRegister" value="Register" class="btn btn-primary" />
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="divAfterRegistration" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Registration Confirm</h4>
+            </div>
+            <div class="modal-body">
+                <div class="lineH20">
+                    <p class="mb-0">
+                        <b>Dear <label id="lblStudentName"></label>,</b><br>
+                        <br>
+                        You have completed the <b>1st Step</b> of Registration process for SLIET ADMISSIONS 2024-25. You are now required to proceed with further  steps of Registration in order to successfully register yourself for the SLIET ADMISSIONS 2024-25.&nbsp;<br>
+
+                        Kindly read Instructions carefully, specifically  the instructions related to <a href="/Home/UploadImages" target="_blank">procedure of preparing images of  Photograph/Signature</a>.&nbsp;<br>
+                        <br>
+                        <h6 class="font-weight-bold mb-2">Login Detail</h6>
+                    <p class="mb-0">
+                        <span><b class="font-weight-bold">UserName:</b> <label id="lblUserName"></label></span>,
+                        <span class="ml-3"><b class="font-weight-bold">Password: </b><label id="lblPassword"></label></span>
+                    </p>
+                    <p>
+                        <b>Complete following steps before closing date(15 Apr,2024)*Last date For Ph.D. 15 July 2024:</b><br>
+                        <br>
+                        Step 2: Qualification/Experience  Details<br>
+                        Step 3: Upload Images<br>
+                        Step 4: Make Payment&nbsp;<br>
+                        Step 5: Print Registration Form.
+                    </p>
+
+                    <p>Kindly login for SLIET ADMISSIONS 2024-25 using your Candidate  ID &amp; Password to complete Application, before Application closing date (15 Apr,2024). </p>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="Proceed" id="btnFinalProceed" class="btn btn-primary">
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal divPrint" id="mdInstructions" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div id="divHeader" class="modal-header pb-0 noBorder hideOnPrint">
+                <h3 id="gridSystemModalLabel" class="modal-LeadType modal-title text-left">
+                    <br />
+                </h3>
+
+                <button type="button" id="btnClose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body pt-0">
+
+                <div class="" id="myform">
+                    
+
+                    <div class="innerSection">
+                        <h3>How to Upload Images</h3>
+                        <p style="font-size: 15px">
+                            <b><u>Instructions for creating and uploading of Images of Photograph, Signature.</u></b>
+                        </p>
+                        <p><b>Uploading of digital Images of Photograph, Signature is mandatory. Read and follow the instructions given below to avoid inconvenience and rejection of application form due to uploading of improper digital images. </b></p>
+
+                        <p>
+                            <b>
+                                Prepare the digital images in advance to avoid delays/inconvenience while filling the online application form.
+                            </b>
+                        </p>
+
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default mb-3">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" style="display: block; padding: 1px;">
+                                            <span style="font-size: 14px;">Instruction for preparing digital image of Photo</span>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <!--/.panel-heading -->
+                                <div id="collapseSeven" class="panel-collapse collapse" style="height: 0px;">
+                                    <div class="panel-body">
+                                        <div class="bor1pxSolid" style="padding: 10px;">
+                                            <p>Digital image of  your photo can be made in two ways</p>
+                                            <ol style="list-style-type:upper-alpha;">
+                                                <li>Clicking your photo using a  digital device (camera etc)</li>
+                                                <li>Scanning of already available  photograph</li>
+                                            </ol>
+                                            <ol style="list-style-type:upper-alpha;">
+                                                <li><b>Click  a photo using a digital device</b></li>
+                                                <p>1. <b>Clicking your photo</b></p>
+                                                <ol style="list-style-type:lower-alpha;">
+                                                    <li>Stand/sit against a <b>white background</b>. </li>
+                                                    <li>Click colour photograph in <b>bright light</b> using any digital device  (preferably with &gt; 5 megapixel resolution). Avoid using flash as it tends to  create a shadow on the white background.</li>
+                                                    <li>Look straight into the camera  (to avoid angulation of face). </li>
+                                                    <li>Ensure that your eyes and both  ears are clearly visible on the photograph.</li>
+                                                </ol>
+                                                <p>2. <b>Editing of digital photograph</b></p>
+                                                <ol style="list-style-type:lower-alpha;">
+                                                    <li><b>Transfer</b> the photograph from the digital  device to a computer/laptop.</li>
+                                                    <li><b>Crop</b> the  photograph such that your head, shoulders are visible and occupy most of the  image. </li>
+                                                    <li><b>Resize</b> the  image to 50 – 100 Kb (maintain aspect ratio, i.e. height and width ratio to  avoid distortion of image)</li>
+
+                                                    <img src="/Images/photo1.jpg" />
+
+                                                </ol>
+                                                <br />
+                                                <li>
+                                                    <b>Scanning of already available photograph</b><br />
+                                                </li>
+                                                In case you already have a professionally clicked passport size colour photograph follow the following procedure to prepare scanned image of the same.
+                                                <br />
+                                                <br />
+                                                <p>1. <b>Before you scan the photograph ensure that</b></p>
+                                                <ol style="list-style-type:lower-alpha;">
+                                                    <li>Photo has been taken against a white background without a border and clearly shows your face, eyes and both ears.</li>
+                                                    <li>The photograph is of standard passport size (3.5 cm X 4.5 cm, width X height)</li>
+                                                    <li>The photograph is recent (within 6 months of online application). </li>
+                                                </ol>
+                                                <p>2. <b>Scanning of passport size photograph</b></p>
+                                                <ol style="list-style-type:lower-alpha;">
+                                                    <li>Draw a Box of 3.5 horizontal and 4.5 vertical size (3.5 cm x 4.5 cm) on a white sheet of paper using a pencil.
+                                                    <li>Paste the photograph in the box drawn.</li>
+                                                    <li>Put the paper with photograph in the scanner and scan only the box with photograph (do not scan the whole sheet of white paper). Set the scanning to 200 dpi and scan the photograph. During scanning most software allows selection of the desired area for final scanning after initial preview & scan. </li>
+                                                    <li>Save the scanned images as jpg/jpeg/gif/png as “Photograph.jpg” or “Photograph.jpeg” or “Photograph.gif” or “Photograph.png”</li>
+                                                    <li>Resize the scanned image to 50 – 100 Kb. Use any image editing software to size the image. Maintain the aspect ratio (i.e. relationship of height vs width while resizing) </li>
+
+                                                    <img src="/Images/photo2.jpg" />
+
+                                                </ol>
+                                                <p> <b>Checklist before uploading digital image of photo </b></p>
+                                                <ol style="list-style-type:lower-alpha;">
+                                                    <li>1.	Photograph is in colour with white background.</li>
+                                                    <li>Your face is clearly visible. </li>
+                                                    <li>Size of the image is between 50-100 kb.</li>
+                                                    <li>Image is in .jpg/.jpeg/.gif/.png format. </li>
+                                                    <li>Image is not blurred in the process of editing. </li>
+
+                                                </ol>
+
+                                                <p> <b><u>Please note the common reasons for rejecting photographs are : </u></b></p>
+                                                <ol style="list-style-type:lower-alpha;">
+                                                    <li>Background is not white.</li>
+                                                    <li>Image is blurred</li>
+                                                    <li>Whole sheet is scanned such that the photograph is occupying only a small portion of the  frame.</li>
+                                                    <li>Photograph taken casually with dark glasses/full length/group/side profile etc.</li>
+
+
+                                                </ol>
+
+
+                                            </ol>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/.panel-collapse -->
+                            </div>
+                            <!-- /.panel -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" style="display: block; padding: 1px;">
+                                            <span style="font-size: 14px;">Instruction for preparing digital image of signature</span>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <!--/.panel-heading -->
+                                <div id="collapseEight" class="panel-collapse collapse" style="height: 0px;">
+                                    <div class="panel-body">
+                                        <div class="bor1pxSolid" style="padding: 10px;">
+                                            <p><b><u>Instruction for preparing digital image of signature</u></b></p>
+
+                                            <p><b>Putting signature inside a box on a white sheet</b></p>
+
+                                            <ul>
+                                                <li>Draw a box of 3 cm x 6 cm (width*height) on a white paper sheet with a pencil. </li>
+                                                <li>Take a thick tip black/blue ink pen (preferably fountain pen). </li>
+                                                <li>The person who will be appearing in the examination should sign within the drawn box (full signature). </li>
+                                                <li>
+                                                    Following kind of signatures are <b>NOT</b> acceptable:
+                                                    <img src="/Images/sig1.jpg" />
+                                                <li>⁻	Signature containing Initials only</li>
+                                                <li>⁻	Signature in CAPITAL LETTERS</li>
+                                                <li>⁻	Signature with overwriting</li>
+                                                </li>
+                                            </ul>
+
+                                            <p><b>Digital image of your Signature can be made in two ways</b></p>
+                                            <ol>
+                                                <li>Using a digital device to directly image (i.e. camera)</li>
+                                                <li>Scanning the signature</li>
+                                            </ol>
+
+                                            <ol>
+                                                <b>A.	Preparing digital image of signature using a digital device (camera)</b>
+                                                <ol style="margin-top: 12px; line-height: 22px; ">
+                                                    <li><b>Clicking image of signature using a digital device.</b></li>
+                                                    <ul style="list-style-type:upper-alpha;">
+                                                        <li>Click the signature within the box in bright light conditions using any digital device (preferably with > 5 megapixel resolution). Avoid using flash. </li>
+                                                        <li>Check the shadow of your hands/camera/smartphone etc. does not fall on the sheet. </li>
+                                                        <li>Click the image and check that it is not blurred due to low light conditions or shaking of hands.</li>
+
+
+                                                        <img src="/Images/sig2.jpg" />
+                                                    </ul>
+                                                    <li><b>Editing digital image of the signature</b></li>
+                                                    <ul>
+                                                        <li>Transfer the digital image to a computer/laptop.
+                                                        <li>
+                                                        <li>If required, use auto-correct feature of image editing software so that the signature is clear against a white background.
+                                                        <li>
+                                                        <li>Crop the image such that borders of box are reached.
+                                                        <li>
+                                                        <li>Resize the image to 20 – 100 Kb (maintain aspect ratio, i.e. height and width ratio to avoid distortion of image)
+                                                        <li>
+                                                    </ul>
+                                                </ol>
+                                            </ol>
+                                            </ol>
+                                            <ol style="margin-top: 12px; line-height: 22px; ">
+                                                <li><b>Scanning the signature</b></li>
+                                                <ol style="font-weight: normal;">
+                                                    <li>Set the scanner to 200 dpi and scan only the box with signature (DO NOT scan the whole sheet)</li>
+                                                    <li>Save the scanned signature as .jpg/.jpeg/.gif/.png image.</li>
+                                                    <li>Re-size the image to 20 to 100 Kb. Size of the image can be checked by right click on the image and then go to “Properties” link. (Click here to know how to resize a scanned image)</li>
+
+                                                    <img src="/Images/sig3.jpg" />
+
+                                                </ol>
+                                            </ol>
+                                            <p><b><u>Checklist  before uploading digital of signature</u></b></p>
+                                            <ol style="font-weight: normal; line-height:20px;">
+                                                <li>Signature is clear and without  overwriting and against white background</li>
+                                                <li>Image size is between 20 to 100  Kb</li>
+                                                <li>Image is in .jpg/.jpeg/.gif/.png format. </li>
+                                                <li>Image is not blurred in the process of editing. </li>
+
+                                            </ol>
+                                            <p><b><u>Please note the common reasons for rejecting Signature are:</u></b></p>
+                                            <ol style="font-weight: normal; line-height:20px;">
+                                                <li>Background is not white</li>
+                                                <li>Image is blurred.</li>
+                                                <li>Whole sheet is scanned such that the signature is occupying only a small portion of    the frame.</li>
+
+
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row" id="myTable">
+                    <div class="col-lg-12">
+                        <div id="tblTimeSlotList"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+   
+
+
+    <footer class="hideOnPrint">
+        <div class="copyright">
+            <p>
+                <small><a href="http://sliet.ac.in/" target="_blank" class="text-white"><u>Copyright &#169; Sant Longowal Institute of Engineering and Technology, Longowal - 148106 </u> </a></small>
+
+            </p>
+            <button class="scroll-to-top fa fa-angle-up" onclick="topPage();" title="Scroll To Top" style="display: block;"></button>
+        </div>
+    </footer>
+
+    <script>
+        $('.carousel').carousel({
+            interval: 3000
+        })
+
+        $(document).ready(function () {
+            $("#status").hide();
+            $("#dvWrapper").css("padding-top", "0px");
+        });
+    </script>
+</body>
+
+</html>
